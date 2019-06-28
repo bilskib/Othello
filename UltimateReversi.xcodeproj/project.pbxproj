@@ -12,6 +12,15 @@
 		0F9E82E922B9698500A96D94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F9E82E722B9698500A96D94 /* Main.storyboard */; };
 		0F9E82EB22B9698600A96D94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F9E82EA22B9698600A96D94 /* Assets.xcassets */; };
 		0F9E82EE22B9698600A96D94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F9E82EC22B9698600A96D94 /* LaunchScreen.storyboard */; };
+		0F9E82F622B972DC00A96D94 /* Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E82F522B972DC00A96D94 /* Move.swift */; };
+		0F9E82F822B9739E00A96D94 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E82F722B9739E00A96D94 /* Constants.swift */; };
+		0F9E82FA22B9745B00A96D94 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E82F922B9745B00A96D94 /* Utilities.swift */; };
+		0F9E82FC22B9748400A96D94 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E82FB22B9748400A96D94 /* Player.swift */; };
+		0F9E830022B974FC00A96D94 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E82FF22B974FC00A96D94 /* Board.swift */; };
+		0F9E830222B97CCA00A96D94 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E830122B97CCA00A96D94 /* GameModel.swift */; };
+		0F9E830422B982BD00A96D94 /* ChipImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E830322B982BD00A96D94 /* ChipImages.swift */; };
+		0F9E830622B98F7D00A96D94 /* GameLogicUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E830522B98F7D00A96D94 /* GameLogicUI.swift */; };
+		0F9E830822B993AB00A96D94 /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E830722B993AB00A96D94 /* GameLogic.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +31,15 @@
 		0F9E82EA22B9698600A96D94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0F9E82ED22B9698600A96D94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0F9E82EF22B9698600A96D94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0F9E82F522B972DC00A96D94 /* Move.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Move.swift; sourceTree = "<group>"; };
+		0F9E82F722B9739E00A96D94 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0F9E82F922B9745B00A96D94 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		0F9E82FB22B9748400A96D94 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		0F9E82FF22B974FC00A96D94 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		0F9E830122B97CCA00A96D94 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		0F9E830322B982BD00A96D94 /* ChipImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipImages.swift; sourceTree = "<group>"; };
+		0F9E830522B98F7D00A96D94 /* GameLogicUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLogicUI.swift; sourceTree = "<group>"; };
+		0F9E830722B993AB00A96D94 /* GameLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +53,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0F28506822BC29CB00FC1C99 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0F9E82FF22B974FC00A96D94 /* Board.swift */,
+				0F9E830122B97CCA00A96D94 /* GameModel.swift */,
+				0F9E82F522B972DC00A96D94 /* Move.swift */,
+				0F9E82FB22B9748400A96D94 /* Player.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		0F9E82D722B9698500A96D94 = {
 			isa = PBXGroup;
 			children = (
@@ -55,11 +84,17 @@
 			isa = PBXGroup;
 			children = (
 				0F9E82E322B9698500A96D94 /* AppDelegate.swift */,
+				0F28506822BC29CB00FC1C99 /* Model */,
+				0F9E830322B982BD00A96D94 /* ChipImages.swift */,
+				0F9E82F722B9739E00A96D94 /* Constants.swift */,
+				0F9E830722B993AB00A96D94 /* GameLogic.swift */,
+				0F9E830522B98F7D00A96D94 /* GameLogicUI.swift */,
+				0F9E82F922B9745B00A96D94 /* Utilities.swift */,
 				0F9E82E522B9698500A96D94 /* ViewController.swift */,
-				0F9E82E722B9698500A96D94 /* Main.storyboard */,
 				0F9E82EA22B9698600A96D94 /* Assets.xcassets */,
-				0F9E82EC22B9698600A96D94 /* LaunchScreen.storyboard */,
 				0F9E82EF22B9698600A96D94 /* Info.plist */,
+				0F9E82EC22B9698600A96D94 /* LaunchScreen.storyboard */,
+				0F9E82E722B9698500A96D94 /* Main.storyboard */,
 			);
 			path = UltimateReversi;
 			sourceTree = "<group>";
@@ -136,7 +171,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F9E82E622B9698500A96D94 /* ViewController.swift in Sources */,
+				0F9E830822B993AB00A96D94 /* GameLogic.swift in Sources */,
+				0F9E82F622B972DC00A96D94 /* Move.swift in Sources */,
 				0F9E82E422B9698500A96D94 /* AppDelegate.swift in Sources */,
+				0F9E82FA22B9745B00A96D94 /* Utilities.swift in Sources */,
+				0F9E830022B974FC00A96D94 /* Board.swift in Sources */,
+				0F9E830422B982BD00A96D94 /* ChipImages.swift in Sources */,
+				0F9E830222B97CCA00A96D94 /* GameModel.swift in Sources */,
+				0F9E82FC22B9748400A96D94 /* Player.swift in Sources */,
+				0F9E830622B98F7D00A96D94 /* GameLogicUI.swift in Sources */,
+				0F9E82F822B9739E00A96D94 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,7 +333,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.b4rt.UltimateReversi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.b4rt.ReversiPA1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -307,7 +351,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.b4rt.UltimateReversi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.b4rt.ReversiPA1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
