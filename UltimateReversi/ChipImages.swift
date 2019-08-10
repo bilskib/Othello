@@ -11,12 +11,10 @@ import UIKit
 final class ChipImages {
     
     var cellImage: UIImage!
-    
     var whiteChipWithLight: UIImage!
     var whiteCIChipWithLight: CIImage!
     var blackChipWithLight: UIImage!
     var blackCIChipWithLight: CIImage!
-    
     private static let size = CGSize(width: 100, height: 100)
     private let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
 

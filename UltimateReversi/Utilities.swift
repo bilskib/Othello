@@ -12,7 +12,7 @@ let directions: [(row: Int, col: Int)] =
 [
 (1,-1), (1,0), (1,1), // up-left, up, up-right
 (0,-1),        (0,1), // left, right
-(-1,-1), (-1,0), (-1,1) // down-left...
+(-1,-1), (-1,0), (-1,1) // down-left, down, down-right
 ]
 
 func checkOneDirection(board: Board, _ color: CellType, _ row: Int, _ col: Int, _ dir: (row: Int, col: Int)) -> Move? {
@@ -214,7 +214,6 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
     
     //score += 382.026 * lBonus
     score += 382 * lBonus
-    
     
     // Mobility
     var mBonus = 0.0

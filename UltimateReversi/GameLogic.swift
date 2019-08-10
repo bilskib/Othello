@@ -112,7 +112,7 @@ final class GameLogic {
             }
             gameModel.currentPlayer = gameModel.currentPlayer.opponent
             if gameModel.currentPlayer == gamePlayers[1] {
-                aiMove() // let AI work
+                aiMove() // AI works here
             }
             return
         }

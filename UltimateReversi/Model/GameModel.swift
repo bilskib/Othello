@@ -12,9 +12,26 @@ final class GameModel: NSObject, GKGameModel {
     
     var board = Board()
     var currentPlayer = gamePlayers[0]  // 0 - BLACK, 1 - WHITE
-    
     let GKGameModelMaxScore = 5000
     let GKGameModelMinScore = -5000
+    
+    private func flipCells(row: Int, col: Int) {
+        let playerColor = currentPlayer.color
+        for dir in directions {
+            if let move = checkOneDirection(board: board, playerColor, row, col, dir) {
+                var nextRow = move.row - dir.row
+                var nextCol = move.column - dir.col
+                while (nextRow != row) || (nextCol != col) {
+                    self.board[nextRow, nextCol] = playerColor
+                    nextRow -= dir.row
+                    nextCol -= dir.col
+                }
+            }
+        }
+    }
+}
+
+extension GameModel {
     
     var players: [GKGameModelPlayer]? {
         return gamePlayers
@@ -60,25 +77,9 @@ final class GameModel: NSObject, GKGameModel {
         return copy
     }
     
-    
     func score(for player: GKGameModelPlayer) -> Int {
         let player = player as! Player
         let playerScore = dynamicHeuristicEvaluation(for: player, on: board)
         return Int(playerScore)
-    }
-    
-    private func flipCells(row: Int, col: Int) {
-        let playerColor = currentPlayer.color
-        for dir in directions {
-            if let move = checkOneDirection(board: board, playerColor, row, col, dir) {
-                var nextRow = move.row - dir.row
-                var nextCol = move.column - dir.col
-                while (nextRow != row) || (nextCol != col) {
-                    self.board[nextRow, nextCol] = playerColor
-                    nextRow -= dir.row
-                    nextCol -= dir.col
-                }
-            }
-        }
     }
 }
