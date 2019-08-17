@@ -11,8 +11,6 @@ import GameplayKit
 final class Player: NSObject, GKGameModelPlayer {
     
     private let id: Int
-    var playerId: Int { return id}
-    
     let color: CellType
     
     var opponent: Player {
@@ -31,4 +29,10 @@ final class Player: NSObject, GKGameModelPlayer {
         self.id = playerColor.rawValue
         super.init()
     }
+}
+
+// Required by GKGameModelPlayer protocol
+extension Player {
+    
+    var playerId: Int { return id}
 }

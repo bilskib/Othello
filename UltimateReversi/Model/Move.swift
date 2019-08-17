@@ -11,12 +11,6 @@ import GameplayKit
 final class Move: NSObject, GKGameModelUpdate {
     
     private var score = 0
-    
-    var value: Int {
-        get { return score }
-        set { score = newValue }
-    }
-    
     let row: Int
     let column: Int
     
@@ -24,5 +18,14 @@ final class Move: NSObject, GKGameModelUpdate {
         self.row = row
         self.column = column
         super.init()
+    }
+}
+
+// Required by GKGameModelUpdate protocol
+extension Move {
+    
+    var value: Int {
+        get { return score }
+        set { score = newValue }
     }
 }

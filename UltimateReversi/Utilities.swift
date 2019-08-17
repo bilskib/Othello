@@ -1,10 +1,30 @@
 //
-//  Common.swift
+//  Utilities.swift
 //  UltimateReversi
 //
 //  Created by Bartosz on 18/06/2019.
 //  Copyright © 2019 Bartosz Bilski. All rights reserved.
 //
+
+struct Constants {
+    
+    static let cellBackgroundImage = "board"
+    static let cellImage = "CellImage"
+    
+    struct ChipImages {
+        static let whiteChip = "WhiteChip"
+        static let blackChip = "BlackChip"
+    }
+    
+    struct Fonts {
+        static let countsFont = "Verdana"
+        static let alertFont = "Verdana"
+    }
+    
+    static let countsLabelSpriteName = "CountsLabel"
+    static let alertSpriteName = "Alert"
+    static let gearImage = "loader"
+}
 
 let gamePlayers = [Player(playerColor: .Black),Player(playerColor: .White)]
 
@@ -74,7 +94,8 @@ func playerHasValidMoves(board: Board, _ player: Player) -> Bool {
 }
 
 func gameEnded(board: Board, _ player: Player) -> Bool {
-    if !playerHasValidMoves(board: board, player) && !playerHasValidMoves(board: board, player.opponent) { return true } else { return false }
+    if !playerHasValidMoves(board: board, player) && !playerHasValidMoves(board: board, player.opponent) { return true }
+    else { return false }
 }
 
 
@@ -103,14 +124,14 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
     let dirY = [ 0,  1, 1, 1, 0, -1, -1, -1]
     
     let evalBoard: [[Double]] = [
-    [20, -3, 11,  8,  8, 11, -3, 20],
-    [-3, -7, -4,  1,  1, -4, -7, -3],
+    [25, -3, 11,  8,  8, 11, -3, 25],
+    [-3, -8, -4,  1,  1, -4, -8, -3],
     [11, -4,  2,  2,  2,  2, -4, 11],
     [8,   1,  2, -3, -3,  2,  1,  8],
     [8,   1,  2, -3, -3,  2,  1,  8],
     [11, -4,  2,  2,  2,  2, -4, 11],
-    [-3, -7, -4,  1,  1, -4, -7, -3],
-    [20, -3, 11,  8,  8, 11, -3, 20]
+    [-3, -8, -4,  1,  1, -4, -8, -3],
+    [25, -3, 11,  8,  8, 11, -3, 25]
     ]
     
     // Disk amount bonus

@@ -68,7 +68,7 @@ final class GameLogic {
             if gameModel.currentPlayer == gamePlayers[0] {
                 return // wait for human move
             } else {
-                aiMove() // let AI work
+                AIMove() // let AI work
             }
         } else { // player must pass
             alertActive = true
@@ -77,7 +77,7 @@ final class GameLogic {
         }
     }
     
-    private func aiMove() {
+    private func AIMove() {
         let strategist = GKMinmaxStrategist()
         strategist.gameModel = gameModel
         
@@ -90,12 +90,11 @@ final class GameLogic {
         //strategist.randomSource = mersenneTwister
         strategist.maxLookAheadDepth = 5
         
-        gameScene.showAIIndicator(yes: true)
+        gameScene.showAIIndicator(check: true)
         let myDispatchWorkItem = DispatchWorkItem(qos: .userInitiated, flags: .noQoS, block: {
-            //let move = strategist.bestMoveForActivePlayer() as! Move
             let move = strategist.bestMove(for: self.gameModel.currentPlayer) as! Move
             DispatchQueue.main.async {
-                self.gameScene.showAIIndicator(yes: false)
+                self.gameScene.showAIIndicator(check: false)
                 self.makeMove(row: move.row, col: move.column)
             }
         })
@@ -112,7 +111,7 @@ final class GameLogic {
             }
             gameModel.currentPlayer = gameModel.currentPlayer.opponent
             if gameModel.currentPlayer == gamePlayers[1] {
-                aiMove() // AI works here
+                AIMove() // AI works here
             }
             return
         }

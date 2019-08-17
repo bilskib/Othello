@@ -21,7 +21,7 @@ final class GameLogicUI: SKScene {
     
     func displayChip(color: CellType, row: Int, column: Int) {
         if let cell = childNode(withName: "\(row)\(column)") as! SKSpriteNode? {
-        let chipSize = CGSize(width: cell.size.width * 0.8, height: cell.size.height * 0.8)
+        let chipSize = CGSize(width: cell.size.width * 0.85, height: cell.size.height * 0.85)
         let texture = color == .White ? atlas.textureNamed(Constants.ChipImages.whiteChip) : atlas.textureNamed(Constants.ChipImages.blackChip)
         let chip = SKSpriteNode(texture: texture, size: chipSize)
         chip.name = cell.name
@@ -33,17 +33,14 @@ final class GameLogicUI: SKScene {
     func updateChip(color: CellType, _ row: Int, _ column: Int) {
         if let cell = childNode(withName: "\(row)\(column)") as! SKSpriteNode? {
             let chip = cell.children[0] as! SKSpriteNode
-        let savedWidth = chip.frame.width
-        let resizeToLine = SKAction.resize(toWidth: 4, duration: 0.25)
-        let texture = color == .White ?
-            atlas.textureNamed(Constants.ChipImages.whiteChip) :
-            atlas.textureNamed(Constants.ChipImages.blackChip)
-        let changeColor = SKAction.setTexture(texture)
-        let restoreWidth = SKAction.resize(toWidth: savedWidth, duration: 0.25)
-        let sequence = SKAction.sequence(
-            [resizeToLine,
-             changeColor,
-             restoreWidth])
+            let savedWidth = chip.frame.width
+            let resizeToLine = SKAction.resize(toWidth: 4, duration: 0.25)
+            let texture = color == .White ?
+                atlas.textureNamed(Constants.ChipImages.whiteChip) :
+                atlas.textureNamed(Constants.ChipImages.blackChip)
+            let changeColor = SKAction.setTexture(texture)
+            let restoreWidth = SKAction.resize(toWidth: savedWidth, duration: 0.25)
+            let sequence = SKAction.sequence([resizeToLine, changeColor, restoreWidth])
             chip.run(sequence, completion: {chip.texture = texture}) }
     }
     
@@ -104,13 +101,13 @@ final class GameLogicUI: SKScene {
         return gear
     }
     
-    func showAIIndicator(yes: Bool) {
-        if yes {
+    func showAIIndicator(check: Bool) {
+        if check == true {
             let y = self.frame.maxY-(gearSprite.size.height/2)-1
             gearSprite.position = CGPoint(x: self.frame.midX, y: y)
             gearSprite.zPosition = 2
-            let action = SKAction.rotate(byAngle: CGFloat(-Double.pi), duration:1.5)
-            gearSprite.run(SKAction.repeatForever(action))
+            let action = SKAction.rotate(byAngle: CGFloat(-Double.pi/2), duration: 2)
+            gearSprite.run(SKAction.repeat(action, count: 5))
             self.addChild(gearSprite)
         } else {
             gearSprite.removeFromParent()
@@ -143,10 +140,10 @@ final class GameLogicUI: SKScene {
         for row in 0..<8 {
             for col in 0..<8 {
                 if let cell = childNode(withName: "\(row)\(col)") as! SKSpriteNode? {
-                if cell.children.isEmpty {
-                    continue
-                }
-                cell.removeAllChildren()
+                    if cell.children.isEmpty {
+                        continue
+                    }
+                    cell.removeAllChildren()
                 }
             }
         }

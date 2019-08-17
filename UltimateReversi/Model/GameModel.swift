@@ -31,6 +31,7 @@ final class GameModel: NSObject, GKGameModel {
     }
 }
 
+// Required by GKGameModel protocol
 extension GameModel {
     
     var players: [GKGameModelPlayer]? {

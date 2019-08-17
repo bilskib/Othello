@@ -7,7 +7,7 @@
 //
 
 enum CellType: Int {
-    case Empty = 0, White = 1, Black = -1
+    case Empty, White, Black
 }
 
 struct Board {
