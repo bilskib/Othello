@@ -23,7 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0F9E82E022B9698500A96D94 /* UltimateReversi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UltimateReversi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F9E82E022B9698500A96D94 /* Othello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Othello.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F9E82E322B9698500A96D94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F9E82E522B9698500A96D94 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0F9E82E822B9698500A96D94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 		0F9E82D722B9698500A96D94 = {
 			isa = PBXGroup;
 			children = (
-				0F9E82E222B9698500A96D94 /* UltimateReversi */,
+				0F9E82E222B9698500A96D94 /* Othello */,
 				0F9E82E122B9698500A96D94 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -91,12 +91,12 @@
 		0F9E82E122B9698500A96D94 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0F9E82E022B9698500A96D94 /* UltimateReversi.app */,
+				0F9E82E022B9698500A96D94 /* Othello.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0F9E82E222B9698500A96D94 /* UltimateReversi */ = {
+		0F9E82E222B9698500A96D94 /* Othello */ = {
 			isa = PBXGroup;
 			children = (
 				0F9E82E322B9698500A96D94 /* AppDelegate.swift */,
@@ -109,15 +109,15 @@
 				0F9E82EC22B9698600A96D94 /* LaunchScreen.storyboard */,
 				0F9E82E722B9698500A96D94 /* Main.storyboard */,
 			);
-			path = UltimateReversi;
+			path = Othello;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0F9E82DF22B9698500A96D94 /* UltimateReversi */ = {
+		0F9E82DF22B9698500A96D94 /* Othello */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0F9E82F222B9698600A96D94 /* Build configuration list for PBXNativeTarget "UltimateReversi" */;
+			buildConfigurationList = 0F9E82F222B9698600A96D94 /* Build configuration list for PBXNativeTarget "Othello" */;
 			buildPhases = (
 				0F9E82DC22B9698500A96D94 /* Sources */,
 				0F9E82DD22B9698500A96D94 /* Frameworks */,
@@ -127,9 +127,9 @@
 			);
 			dependencies = (
 			);
-			name = UltimateReversi;
+			name = Othello;
 			productName = UltimateReversi;
-			productReference = 0F9E82E022B9698500A96D94 /* UltimateReversi.app */;
+			productReference = 0F9E82E022B9698500A96D94 /* Othello.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -147,7 +147,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0F9E82DB22B9698500A96D94 /* Build configuration list for PBXProject "UltimateReversi" */;
+			buildConfigurationList = 0F9E82DB22B9698500A96D94 /* Build configuration list for PBXProject "Othello" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -160,7 +160,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0F9E82DF22B9698500A96D94 /* UltimateReversi */,
+				0F9E82DF22B9698500A96D94 /* Othello */,
 			);
 		};
 /* End PBXProject section */
@@ -340,12 +340,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W77FT9BJAC;
-				INFOPLIST_FILE = UltimateReversi/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Othello/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.b4rt.UltimateReversi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.b4rt.Othello;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -358,12 +358,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W77FT9BJAC;
-				INFOPLIST_FILE = UltimateReversi/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Othello/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.b4rt.UltimateReversi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.b4rt.Othello;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -373,7 +373,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0F9E82DB22B9698500A96D94 /* Build configuration list for PBXProject "UltimateReversi" */ = {
+		0F9E82DB22B9698500A96D94 /* Build configuration list for PBXProject "Othello" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0F9E82F022B9698600A96D94 /* Debug */,
@@ -382,7 +382,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0F9E82F222B9698600A96D94 /* Build configuration list for PBXNativeTarget "UltimateReversi" */ = {
+		0F9E82F222B9698600A96D94 /* Build configuration list for PBXNativeTarget "Othello" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0F9E82F322B9698600A96D94 /* Debug */,

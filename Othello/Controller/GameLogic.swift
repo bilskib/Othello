@@ -1,6 +1,6 @@
 //
 //  GameLogic.swift
-//  UltimateReversi
+//  Othello
 //
 //  Created by Bartosz on 18/06/2019.
 //  Copyright © 2019 Bartosz Bilski. All rights reserved.
@@ -12,7 +12,7 @@ final class GameLogic {
     
     private var gameScene: GameLogicUI
     private var gameModel = GameModel()
-    private var alertActive = false
+    private var isAlertActive = false
     
     private func addChip(color: CellType, row: Int, column: Int) {
         gameScene.displayChip(color: color, row: row, column: column)
@@ -50,7 +50,7 @@ final class GameLogic {
         gameModel.currentPlayer = gameModel.currentPlayer.opponent
         
         if gameIsFinished() {
-            alertActive = true
+            isAlertActive = true
             var resultText: String
             switch white-black {
             case 1...64:
@@ -71,7 +71,7 @@ final class GameLogic {
                 AIMove() // let AI work
             }
         } else { // player must pass
-            alertActive = true
+            isAlertActive = true
             gameScene.displayAlert(
                 text: "\(gameModel.currentPlayer.color) have to pass!")
         }
@@ -102,8 +102,8 @@ final class GameLogic {
     }
     
     func cellPressed(row: Int, column: Int) {
-        if alertActive { // pass or game over
-            alertActive = false
+        if isAlertActive { // pass or game over
+            isAlertActive = false
             gameScene.removeAlert()
             if gameIsFinished() {
                 setInitialBoard()

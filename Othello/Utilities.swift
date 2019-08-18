@@ -1,6 +1,6 @@
 //
 //  Utilities.swift
-//  UltimateReversi
+//  Othello
 //
 //  Created by Bartosz on 18/06/2019.
 //  Copyright © 2019 Bartosz Bilski. All rights reserved.
@@ -115,10 +115,10 @@ func countValidMoves(for player: Player, on board: Board) -> Double {
 func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
     var score = 0.0
     var playerDisks = 0.0, opponentDisks = 0.0, playerFrontDisks = 0.0, opponentFrontDisks = 0.0
-    let dirX = [-1, -1, 0, 1, 1,  1,  0, -1]
-    let dirY = [ 0,  1, 1, 1, 0, -1, -1, -1]
+    let directionX = [-1, -1, 0, 1, 1,  1,  0, -1]
+    let directionY = [ 0,  1, 1, 1, 0, -1, -1, -1]
     
-    let evalBoard: [[Double]] = [
+    let evaluationBoard: [[Double]] = [
     [25, -3, 11,  8,  8, 11, -3, 25],
     [-3, -8, -4,  1,  1, -4, -8, -3],
     [11, -4,  2,  2,  2,  2, -4, 11],
@@ -136,18 +136,18 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
     for row in 0..<8 {
         for column in 0..<8 {
             if board[row, column] == player.color {
-                dBonus += evalBoard[row][column]
+                dBonus += evaluationBoard[row][column]
                 playerDisks += 1
             } else if board[row, column] == player.opponent.color {
-                dBonus -= evalBoard[row][column]
+                dBonus -= evaluationBoard[row][column]
                 opponentDisks += 1
             }
             if board[row, column] != .Empty {
                 var x: Int, y: Int
                 
                 for index in 0..<8 {
-                    x = row + dirX[index]
-                    y = column + dirY[index]
+                    x = row + directionX[index]
+                    y = column + directionY[index]
                     if x >= 0 && x < 8 && y >= 0 && y < 8 && board[x, y] == .Empty {
                         if board[row, column] == player.color { playerFrontDisks += 1 }
                         else { opponentFrontDisks += 1 }
