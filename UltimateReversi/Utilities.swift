@@ -10,72 +10,67 @@ struct Constants {
     
     static let cellBackgroundImage = "board"
     static let cellImage = "CellImage"
+    static let appFont = "Verdana"
+    static let countsLabelSpriteName = "CountsLabel"
+    static let alertSpriteName = "Alert"
+    static let activityIndicator = "loader"
     
     struct ChipImages {
         static let whiteChip = "WhiteChip"
         static let blackChip = "BlackChip"
     }
-    
-    struct Fonts {
-        static let countsFont = "Verdana"
-        static let alertFont = "Verdana"
-    }
-    
-    static let countsLabelSpriteName = "CountsLabel"
-    static let alertSpriteName = "Alert"
-    static let gearImage = "loader"
 }
 
-let gamePlayers = [Player(playerColor: .Black),Player(playerColor: .White)]
+let gamePlayers = [Player(playerColor: .Black), Player(playerColor: .White)]
 
-let directions: [(row: Int, col: Int)] =
+let directions: [(row: Int, column: Int)] =
 [
 (1,-1), (1,0), (1,1), // up-left, up, up-right
 (0,-1),        (0,1), // left, right
 (-1,-1), (-1,0), (-1,1) // down-left, down, down-right
 ]
 
-func checkOneDirection(board: Board, _ color: CellType, _ row: Int, _ col: Int, _ dir: (row: Int, col: Int)) -> Move? {
+func checkOneDirection(board: Board, _ color: CellType, _ row: Int, _ column: Int, _ dir: (row: Int, column: Int)) -> Move? {
     
-    let positionOutOfRange = { return ($0 < 0) || ($0 > 7)}
+    let outOfBoardPosition = { return ($0 < 0) || ($0 > 7)}
     let opponentColor: CellType = (color == .White) ? .Black : .White
     
     var nextRow = row + dir.row
-    if positionOutOfRange(nextRow) {
+    if outOfBoardPosition(nextRow) {
         return nil
     }
-    var nextCol = col + dir.col
-    if positionOutOfRange(nextCol) {
-        return nil
-    }
-    
-    if board[nextRow, nextCol] != opponentColor {
+    var nextColumn = column + dir.column
+    if outOfBoardPosition(nextColumn) {
         return nil
     }
     
-    while board[nextRow, nextCol] == opponentColor {
+    if board[nextRow, nextColumn] != opponentColor {
+        return nil
+    }
+    
+    while board[nextRow, nextColumn] == opponentColor {
         nextRow += dir.row
-        if positionOutOfRange(nextRow) {
+        if outOfBoardPosition(nextRow) {
             return nil
         }
-        nextCol += dir.col
-        if positionOutOfRange(nextCol) {
+        nextColumn += dir.column
+        if outOfBoardPosition(nextColumn) {
             return nil
         }
     }
     
-    if board[nextRow, nextCol] == color {
-        return Move(row: nextRow, column: nextCol)
+    if board[nextRow, nextColumn] == color {
+        return Move(row: nextRow, column: nextColumn)
     }
     return nil
 }
 
-func isValidMove(board: Board, color: CellType, row: Int, col: Int) -> Bool {
-    if board[row, col] != .Empty {
+func isValidMove(board: Board, color: CellType, row: Int, column: Int) -> Bool {
+    if board[row, column] != .Empty {
         return false
     }
-    for dir in directions {
-        if checkOneDirection(board: board, color, row, col, dir) != nil {
+    for direction in directions {
+        if checkOneDirection(board: board, color, row, column, direction) != nil {
             return true
         }
     }
@@ -84,8 +79,8 @@ func isValidMove(board: Board, color: CellType, row: Int, col: Int) -> Bool {
 
 func playerHasValidMoves(board: Board, _ player: Player) -> Bool {
     for row in 0..<8 {
-        for col in 0..<8 {
-            if isValidMove(board: board, color: player.color, row: row, col: col) {
+        for column in 0..<8 {
+            if isValidMove(board: board, color: player.color, row: row, column: column) {
                 return true
             }
         }
@@ -107,7 +102,7 @@ func countValidMoves(for player: Player, on board: Board) -> Double {
     
     for row in 0..<8 {
         for column in 0..<8 {
-            if isValidMove(board: board, color: player.color, row: row, col: column) {
+            if isValidMove(board: board, color: player.color, row: row, column: column) {
                 validMovesCounter += 1
             }
         }

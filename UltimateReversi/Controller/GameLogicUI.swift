@@ -11,11 +11,11 @@ import SpriteKit
 final class GameLogicUI: SKScene {
     
     private var atlas: SKTextureAtlas!
-    private var gearSprite: SKSpriteNode!   // AI activity indicator
+    private var activityIndicator: SKSpriteNode!
     
     override func didMove(to view: SKView) {
         atlas = createAtlas()
-        gearSprite = createAIIndicator()
+        activityIndicator = createAIIndicator()
         displayEmptyBoard()
     }
     
@@ -48,7 +48,7 @@ final class GameLogicUI: SKScene {
         let topSquare = self.childNode(withName: "74") as! SKSpriteNode
         let fontSize = topSquare.frame.height * 0.6
         let y = topSquare.frame.maxY + (fontSize/2) - 1
-        let countsLabel = SKLabelNode(fontNamed: Constants.Fonts.countsFont)
+        let countsLabel = SKLabelNode(fontNamed: Constants.appFont)
         countsLabel.text = "White: 0  Black: 0"
         countsLabel.fontSize = fontSize
         countsLabel.position = CGPoint(x: self.frame.midX, y: y)
@@ -59,7 +59,7 @@ final class GameLogicUI: SKScene {
     }
     
     func displayAlert(text: String) {
-        let alert = SKLabelNode(fontNamed: Constants.Fonts.alertFont)
+        let alert = SKLabelNode(fontNamed: Constants.appFont)
         let topSquare = self.childNode(withName: "74") as! SKSpriteNode
         let fontSize = topSquare.frame.height * 0.6
         alert.fontSize = fontSize
@@ -95,7 +95,7 @@ final class GameLogicUI: SKScene {
     }
     
     private func createAIIndicator() -> SKSpriteNode {
-        let gear = SKSpriteNode(imageNamed: Constants.gearImage)
+        let gear = SKSpriteNode(imageNamed: Constants.activityIndicator)
         let size = self.size.width/10
         gear.size = CGSize(width: size, height: size)
         return gear
@@ -103,14 +103,14 @@ final class GameLogicUI: SKScene {
     
     func showAIIndicator(check: Bool) {
         if check == true {
-            let y = self.frame.maxY-(gearSprite.size.height/2)-1
-            gearSprite.position = CGPoint(x: self.frame.midX, y: y)
-            gearSprite.zPosition = 2
+            let yPosition = self.frame.maxY-(activityIndicator.size.height/2)-1
+            activityIndicator.position = CGPoint(x: self.frame.midX, y: yPosition)
+            activityIndicator.zPosition = 2
             let action = SKAction.rotate(byAngle: CGFloat(-Double.pi/2), duration: 2)
-            gearSprite.run(SKAction.repeat(action, count: 5))
-            self.addChild(gearSprite)
+            activityIndicator.run(SKAction.repeat(action, count: 5))
+            self.addChild(activityIndicator)
         } else {
-            gearSprite.removeFromParent()
+            activityIndicator.removeFromParent()
         }
     }
     
@@ -123,12 +123,12 @@ final class GameLogicUI: SKScene {
         let yOffset: CGFloat = (boxSideLength/2)
         for row in 0..<8 {
             let xOffset: CGFloat = (boxSideLength/2)
-            for col in 0..<8 {
+            for column in 0..<8 {
                 let square = SKSpriteNode(
                     texture: atlas.textureNamed(Constants.cellImage),
                     size: squareSize)
-                square.position = CGPoint(x: CGFloat(col) * squareSize.width + xOffset, y: CGFloat(row) * squareSize.height + yOffset)
-                square.name = "\(row)\(col)"
+                square.position = CGPoint(x: CGFloat(column) * squareSize.width + xOffset, y: CGFloat(row) * squareSize.height + yOffset)
+                square.name = "\(row)\(column)"
                 square.isUserInteractionEnabled = true
                 self.addChild(square)
             }
@@ -138,8 +138,8 @@ final class GameLogicUI: SKScene {
     
     func clearGameView() {
         for row in 0..<8 {
-            for col in 0..<8 {
-                if let cell = childNode(withName: "\(row)\(col)") as! SKSpriteNode? {
+            for column in 0..<8 {
+                if let cell = childNode(withName: "\(row)\(column)") as! SKSpriteNode? {
                     if cell.children.isEmpty {
                         continue
                     }

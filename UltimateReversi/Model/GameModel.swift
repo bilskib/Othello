@@ -15,16 +15,16 @@ final class GameModel: NSObject, GKGameModel {
     let GKGameModelMaxScore = 5000
     let GKGameModelMinScore = -5000
     
-    private func flipCells(row: Int, col: Int) {
+    private func flipCells(row: Int, column: Int) {
         let playerColor = currentPlayer.color
-        for dir in directions {
-            if let move = checkOneDirection(board: board, playerColor, row, col, dir) {
-                var nextRow = move.row - dir.row
-                var nextCol = move.column - dir.col
-                while (nextRow != row) || (nextCol != col) {
-                    self.board[nextRow, nextCol] = playerColor
-                    nextRow -= dir.row
-                    nextCol -= dir.col
+        for direction in directions {
+            if let move = checkOneDirection(board: board, playerColor, row, column, direction) {
+                var nextRow = move.row - direction.row
+                var nextColumn = move.column - direction.column
+                while (nextRow != row) || (nextColumn != column) {
+                    self.board[nextRow, nextColumn] = playerColor
+                    nextRow -= direction.row
+                    nextColumn -= direction.column
                 }
             }
         }
@@ -52,9 +52,9 @@ extension GameModel {
         let player = player as! Player
         var moves = [Move]()
         for row in 0..<8 {
-            for col in 0..<8 {
-                if isValidMove(board: self.board, color: player.color, row: row, col: col) {
-                    moves.append(Move(row: row, column: col))
+            for column in 0..<8 {
+                if isValidMove(board: self.board, color: player.color, row: row, column: column) {
+                    moves.append(Move(row: row, column: column))
                 }
             }
         }
@@ -66,7 +66,7 @@ extension GameModel {
     func apply(_ gameModelUpdate: GKGameModelUpdate) {
         let move = gameModelUpdate as! Move
         board[move.row, move.column] = currentPlayer.color
-        flipCells(row: move.row, col: move.column)
+        flipCells(row: move.row, column: move.column)
         if playerHasValidMoves(board: board, currentPlayer.opponent){
             currentPlayer = currentPlayer.opponent
         }

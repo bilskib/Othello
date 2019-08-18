@@ -40,10 +40,10 @@ class ViewController: UIViewController {
                 if let num = Int(node.name!) {
                     let row = num / 10
                     let column = num % 10
-                    gameLogic.cellPressed(row: row,column)
+                    gameLogic.cellPressed(row: row, column: column)
                 }
             } else {
-                gameLogic.cellPressed(row: -1,-1)
+                gameLogic.cellPressed(row: -1, column: -1)
             }
         }
     }

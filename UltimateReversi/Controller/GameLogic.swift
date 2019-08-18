@@ -19,19 +19,19 @@ final class GameLogic {
         gameModel.board[row, column] = color
     }
     
-    private func flipCells(row: Int, col: Int) {
+    private func flipCells(row: Int, column: Int) {
         let playerColor = gameModel.currentPlayer.color
         for dir in directions {
-            if let move = checkOneDirection(board: gameModel.board, playerColor, row, col, dir) {
+            if let move = checkOneDirection(board: gameModel.board, playerColor, row, column, dir) {
                 
                 // valid move found, go back and flip
                 var nextRow = move.row - dir.row
-                var nextCol = move.column - dir.col
-                while (nextRow != row) || (nextCol != col) {
+                var nextCol = move.column - dir.column
+                while (nextRow != row) || (nextCol != column) {
                     gameModel.board[nextRow, nextCol] = playerColor
                     gameScene.updateChip(color: playerColor, nextRow, nextCol)
                     nextRow -= dir.row
-                    nextCol -= dir.col
+                    nextCol -= dir.column
                 }
             }
         }
@@ -41,9 +41,9 @@ final class GameLogic {
         return !playerHasValidMoves(board: gameModel.board, gameModel.currentPlayer) && !playerHasValidMoves(board: gameModel.board, gameModel.currentPlayer.opponent)
     }
     
-    private func makeMove(row: Int, col: Int) {
-        addChip(color: gameModel.currentPlayer.color, row: row, column: col)
-        flipCells(row: row, col: col)
+    private func makeMove(row: Int, column: Int) {
+        addChip(color: gameModel.currentPlayer.color, row: row, column: column)
+        flipCells(row: row, column: column)
         let white = numberOfCells(gameModel.board, .White)
         let black = numberOfCells(gameModel.board, .Black)
         gameScene.updateCountsLabel(white: white, black: black)
@@ -95,13 +95,13 @@ final class GameLogic {
             let move = strategist.bestMove(for: self.gameModel.currentPlayer) as! Move
             DispatchQueue.main.async {
                 self.gameScene.showAIIndicator(check: false)
-                self.makeMove(row: move.row, col: move.column)
+                self.makeMove(row: move.row, column: move.column)
             }
         })
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: myDispatchWorkItem)
     }
     
-    func cellPressed(row: Int, _ column: Int) {
+    func cellPressed(row: Int, column: Int) {
         if alertActive { // pass or game over
             alertActive = false
             gameScene.removeAlert()
@@ -120,8 +120,8 @@ final class GameLogic {
         }
         if gameModel.currentPlayer == gamePlayers[0] {
             if isValidMove(board: gameModel.board, color: gameModel.currentPlayer.color,
-                           row: row, col: column) {
-                makeMove(row: row,col: column)
+                           row: row, column: column) {
+                makeMove(row: row, column: column)
             }
         }
     }
@@ -129,14 +129,14 @@ final class GameLogic {
     func setInitialBoard() {
         gameScene.clearGameView() // clear results of previous game
         for row in 0..<8 {
-            for col in 0..<8 {
-                switch (row,col) {
+            for column in 0..<8 {
+                switch (row,column) {
                 case (3,3),(4,4) :
-                    addChip(color: .Black, row: row, column: col)
+                    addChip(color: .Black, row: row, column: column)
                 case (3,4),(4,3) :
-                    addChip(color: .White, row: row, column: col)
+                    addChip(color: .White, row: row, column: column)
                 default:
-                    gameModel.board[row,col] = .Empty
+                    gameModel.board[row,column] = .Empty
                 }
             }
         }
