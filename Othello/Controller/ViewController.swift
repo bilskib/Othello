@@ -33,6 +33,7 @@ class ViewController: UIViewController {
         print("didReceiveMemoryWarning")
     }
     
+    // Touches event
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: scene)
@@ -43,6 +44,7 @@ class ViewController: UIViewController {
                     gameLogic.cellPressed(row: row, column: column)
                 }
             } else {
+                // press outside the gameboard, in the view
                 gameLogic.cellPressed(row: -1, column: -1)
             }
         }

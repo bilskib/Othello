@@ -46,12 +46,12 @@ final class GameLogicUI: SKScene {
     
     private func drawCountsLabel() {
         let topSquare = self.childNode(withName: "74") as! SKSpriteNode
-        let fontSize = topSquare.frame.height * 0.6
-        let y = topSquare.frame.maxY + (fontSize/2) - 1
+        let fontSize = topSquare.frame.height * 0.5
+        //let y = topSquare.frame.maxY + (fontSize/2) - 1
         let countsLabel = SKLabelNode(fontNamed: Constants.appFont)
         countsLabel.text = "White: 0  Black: 0"
         countsLabel.fontSize = fontSize
-        countsLabel.position = CGPoint(x: self.frame.midX, y: y)
+        countsLabel.position = CGPoint(x: 320, y: 10)
         countsLabel.fontColor = SKColor.white
         countsLabel.name = Constants.countsLabelSpriteName
         countsLabel.zPosition = 1
@@ -89,9 +89,9 @@ final class GameLogicUI: SKScene {
     }
 
     func updateCountsLabel(white: Int, black: Int) {
-        if let label = childNode(withName: Constants.countsLabelSpriteName)
+        if let countsLabel = childNode(withName: Constants.countsLabelSpriteName)
             as! SKLabelNode? {
-            label.text = "White: \(white)  Black: \(black)" }
+            countsLabel.text = "White: \(white)  Black: \(black)" }
     }
     
     private func createAIIndicator() -> SKSpriteNode {
@@ -119,8 +119,9 @@ final class GameLogicUI: SKScene {
         let size = self.size.width
         let boxSideLength = (size)/8
         let squareSize = CGSize(width: boxSideLength, height: boxSideLength)
+        
         // draw board
-        let yOffset: CGFloat = (boxSideLength/2)
+        let yOffset: CGFloat = (boxSideLength*1.25)
         for row in 0..<8 {
             let xOffset: CGFloat = (boxSideLength/2)
             for column in 0..<8 {

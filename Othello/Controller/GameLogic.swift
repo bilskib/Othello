@@ -92,7 +92,7 @@ final class GameLogic {
         
         gameScene.showAIIndicator(check: true)
         let myDispatchWorkItem = DispatchWorkItem(qos: .userInitiated, flags: .noQoS, block: {
-            let move = strategist.bestMove(for: self.gameModel.currentPlayer) as! Move
+            let move = strategist.bestMoveForActivePlayer() as! Move
             DispatchQueue.main.async {
                 self.gameScene.showAIIndicator(check: false)
                 self.makeMove(row: move.row, column: move.column)
