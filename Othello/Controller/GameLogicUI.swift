@@ -11,7 +11,7 @@ import SpriteKit
 final class GameLogicUI: SKScene {
     
     private var atlas: SKTextureAtlas!
-    var actInd = UIActivityIndicatorView()
+    private var actInd = UIActivityIndicatorView()
     
     override func didMove(to view: SKView) {
         atlas = createAtlas()
@@ -62,16 +62,13 @@ final class GameLogicUI: SKScene {
     
     // Labels
     private func drawCountsLabel() {
-        let topSquare = self.childNode(withName: "74") as! SKSpriteNode
-        let fontSize = topSquare.frame.height * 0.5
-        //let y = topSquare.frame.maxY + (fontSize/2) - 1
         let countsLabel = SKLabelNode(fontNamed: Constants.appFont)
-        countsLabel.text = "White: 0  Black: 0"
-        countsLabel.fontSize = fontSize
-        countsLabel.position = CGPoint(x: 320, y: 10)
+        countsLabel.fontSize = CGFloat(Constants.appFontSize)
         countsLabel.fontColor = SKColor.white
+        countsLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY - (self.frame.midX + countsLabel.fontSize*1.25))
         countsLabel.name = Constants.countsLabelSpriteName
         countsLabel.zPosition = 1
+        countsLabel.text = "White: 0  Black: 0"
         self.addChild(countsLabel)
     }
     
@@ -83,19 +80,15 @@ final class GameLogicUI: SKScene {
     
     // Alerts
     func displayAlert(text: String) {
-        let alert = SKLabelNode(fontNamed: Constants.appFont)
-        let topSquare = self.childNode(withName: "74") as! SKSpriteNode
-        let fontSize = topSquare.frame.height * 0.6
-        alert.fontSize = fontSize
-        let x = self.frame.midX
-        let y = self.frame.midY
-        alert.position = CGPoint(x: x, y: y)
-        alert.text = text
-        alert.zPosition = 2
-        alert.fontColor = SKColor.red
-        alert.name = Constants.alertSpriteName
-        alert.isUserInteractionEnabled = true
-        self.addChild(alert)
+        let alertLabel = SKLabelNode(fontNamed: Constants.appFont)
+        alertLabel.fontSize = CGFloat(Constants.appFontSize)
+        alertLabel.fontColor = SKColor.red
+        alertLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY + self.frame.midX + alertLabel.fontSize*0.25)
+        alertLabel.name = Constants.alertSpriteName
+        alertLabel.zPosition = 2
+        alertLabel.text = text
+        alertLabel.isUserInteractionEnabled = true
+        self.addChild(alertLabel)
     }
     
     func removeAlert() {
@@ -103,21 +96,21 @@ final class GameLogicUI: SKScene {
         alert?.removeFromParent()
     }
     
+    // Atlas
     private func createAtlas() -> SKTextureAtlas {
-        let chipImages = ChipImages()
+        let images = Images()
         let dictionary = [
-            Constants.ChipImages.whiteChip: chipImages.whiteChipWithLight,
-            Constants.ChipImages.blackChip: chipImages.blackChipWithLight,
-            Constants.cellImage: chipImages.cellImage ]
+            Constants.ChipImages.whiteChip: images.whiteChipWithLight,
+            Constants.ChipImages.blackChip: images.blackChipWithLight,
+            Constants.cellImage: images.cellImage ]
         return SKTextureAtlas(dictionary: dictionary as [String : Any])
     }
     
     // Board
     private func displayEmptyBoard() {
-        let size = self.size.width
-        let boxSideLength = (size)/8
+        let boxSideLength = self.size.width/8
         let squareSize = CGSize(width: boxSideLength, height: boxSideLength)
-        let yOffset: CGFloat = (boxSideLength*1.25)
+        let yOffset: CGFloat = (self.size.height*0.25)
         for row in 0..<8 {
             let xOffset: CGFloat = (boxSideLength/2)
             for column in 0..<8 {

@@ -11,6 +11,7 @@ struct Constants {
     static let cellBackgroundImage = "board"
     static let cellImage = "CellImage"
     static let appFont = "Verdana"
+    static let appFontSize = 30
     static let countsLabelSpriteName = "CountsLabel"
     static let alertSpriteName = "Alert"
     
@@ -92,10 +93,7 @@ func gameEnded(board: Board, _ player: Player) -> Bool {
     else { return false }
 }
 
-
-// Heuristic function for the game
-// 1. Count the number of valid moves for given player in a given board configuration
-
+// Count the number of valid moves for given player in a given board configuration
 func countValidMoves(for player: Player, on board: Board) -> Double {
     var validMovesCounter = 0.0
     
@@ -109,8 +107,8 @@ func countValidMoves(for player: Player, on board: Board) -> Double {
     return validMovesCounter
 }
 
-// 2. Evaluate score for a player
-
+// Heuristic function for the game
+// Evaluate score for a player
 func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
     var score = 0.0
     var playerDisks = 0.0, opponentDisks = 0.0, playerFrontDisks = 0.0, opponentFrontDisks = 0.0
@@ -118,14 +116,14 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
     let directionY = [ 0,  1, 1, 1, 0, -1, -1, -1]
     
     let evaluationBoard: [[Double]] = [
-    [25, -5, 11,  8,  8, 11, -5, 25],
+    [100, -5, 11,  8,  8, 11, -5, 100],
     [-5, -8, -4,  1,  1, -4, -8, -5],
     [11, -4,  2,  2,  2,  2, -4, 11],
     [8,   1,  2, -3, -3,  2,  1,  8],
     [8,   1,  2, -3, -3,  2,  1,  8],
     [11, -4,  2,  2,  2,  2, -4, 11],
     [-5, -8, -4,  1,  1, -4, -8, -5],
-    [25, -5, 11,  8,  8, 11, -5, 25]
+    [100, -5, 11,  8,  8, 11, -5, 100]
     ]
     
     // Disk amount bonus
@@ -157,16 +155,28 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
         score += 10 * dBonus
         
         var pBonus = 0.0
-        if playerDisks > opponentDisks { pBonus = (100 * playerDisks) / (playerDisks + opponentDisks) }
-        else if playerDisks < opponentDisks { pBonus = -(100 * opponentDisks) / (playerDisks + opponentDisks) }
-        else { pBonus = 0 }
+        if playerDisks > opponentDisks {
+            pBonus = (100 * playerDisks) / (playerDisks + opponentDisks)
+        }
+        else if playerDisks < opponentDisks {
+            pBonus = -(100 * opponentDisks) / (playerDisks + opponentDisks)
+        }
+        else {
+            pBonus = 0
+        }
         
         score += 10 * pBonus
         
         var fBonus = 0.0
-        if playerFrontDisks > opponentFrontDisks { fBonus = -(100 * playerFrontDisks) / (playerFrontDisks + opponentFrontDisks) }
-        else if playerFrontDisks < opponentFrontDisks { fBonus = (100 * opponentFrontDisks) / (playerFrontDisks + opponentFrontDisks) }
-        else { fBonus = 0 }
+        if playerFrontDisks > opponentFrontDisks {
+            fBonus = -(100 * playerFrontDisks) / (playerFrontDisks + opponentFrontDisks)
+        }
+        else if playerFrontDisks < opponentFrontDisks {
+            fBonus = (100 * opponentFrontDisks) / (playerFrontDisks + opponentFrontDisks)
+        }
+        else {
+            fBonus = 0
+        }
         
         //score += 74.396 * fBonus
         score += 74 * fBonus
@@ -240,6 +250,5 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
     
     //score += 78.922 * mBonus
     score += 79 * mBonus
-    
     return score
 }

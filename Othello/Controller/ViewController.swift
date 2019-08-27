@@ -17,10 +17,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
         let skView = self.view as! SKView
-        let size = CGSize(width: 640, height: 760)
-        scene = GameLogicUI(size: size)
+        scene = GameLogicUI(size: self.view.bounds.size)
         scene.scaleMode = .aspectFit
         skView.presentScene(scene)
         gameLogic = GameLogic(scene: scene)

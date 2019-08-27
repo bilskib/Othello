@@ -23,7 +23,6 @@ final class GameLogic {
         let playerColor = gameModel.currentPlayer.color
         for dir in directions {
             if let move = checkOneDirection(board: gameModel.board, playerColor, row, column, dir) {
-                
                 // valid move found, go back and flip
                 var nextRow = move.row - dir.row
                 var nextCol = move.column - dir.column
@@ -54,11 +53,11 @@ final class GameLogic {
             var resultText: String
             switch white-black {
             case 1...64:
-                resultText = "White win"
+                resultText = "White wins!"
             case 0:
                 resultText = "Draw"
             default:
-                resultText = "Black win"
+                resultText = "Black wins!"
             }
             gameScene.displayAlert(text: resultText)
             return
@@ -149,6 +148,7 @@ final class GameLogic {
     
     init(scene: GameLogicUI) {
         self.gameScene = scene
+        gameScene.backgroundColor = .black
     }
     
 }

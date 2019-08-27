@@ -1,5 +1,5 @@
 //
-//  ChipImages.swift
+//  Images.swift
 //  Othello
 //
 //  Created by Bartosz on 18/06/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class ChipImages {
+final class Images {
     
     var cellImage: UIImage!
     var whiteChipWithLight: UIImage!
@@ -18,16 +18,14 @@ final class ChipImages {
 
     private func chipWithLightColor(color: UIColor) -> UIImage {
         
-        UIGraphicsBeginImageContextWithOptions(ChipImages.size, true, 0)
+        UIGraphicsBeginImageContextWithOptions(Images.size, true, 0)
         var fillColor: UIColor
-        
         if let patternImage = UIImage(named: Constants.cellBackgroundImage) {
             fillColor = UIColor(patternImage: patternImage)
         } else {
-            fillColor = UIColor.red
+            fillColor = UIColor.green
         }
         
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
         var components: [CGFloat]
         var red: CGFloat = 0.0
         var green: CGFloat = 0.0
@@ -47,18 +45,17 @@ final class ChipImages {
         components += [red, green, blue, alpha]
         
         let center = CGPoint(x: rect.midX, y: rect.midY)
-        let lightPoint = CGPoint(x: center.x + rect.width/10, y: center.y - rect.height/10)
+        let lightPoint = CGPoint(x: center.x  + rect.width/5, y: center.y - rect.height/5)
         let locations: [CGFloat] = [0.0, 1.0]
         
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
         let gradient = CGGradient(colorSpace: colorSpace, colorComponents: components, locations: locations, count: 2)!
         
         if let context = UIGraphicsGetCurrentContext() {
             context.setFillColor(fillColor.cgColor)
             context.addRect(rect)
             context.drawPath(using: .fill)
-            
             context.drawRadialGradient(gradient, startCenter: center, startRadius: rect.width/2, endCenter: lightPoint, endRadius: 0, options: .drawsAfterEndLocation)
-            
             context.setStrokeColor(startColor.cgColor)
             context.addEllipse(in: rect)
             context.drawPath(using: .stroke)
@@ -71,7 +68,7 @@ final class ChipImages {
     }
     
     private func createCellImage() -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(ChipImages.size, true, 0)
+        UIGraphicsBeginImageContextWithOptions(Images.size, true, 0)
         let borderColor = UIColor.black
         var fillColor: UIColor
         if let paternImage = UIImage(named:
@@ -91,6 +88,7 @@ final class ChipImages {
         
         let cellImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+        // MARK: To unwrap this safely
         return cellImage!
     }
     
