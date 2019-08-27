@@ -90,11 +90,11 @@ final class GameLogic {
         //strategist.randomSource = mersenneTwister
         strategist.maxLookAheadDepth = 5
         
-        gameScene.showAIIndicator(check: true)
+        gameScene.showActivityIndicator(check: true)
         let myDispatchWorkItem = DispatchWorkItem(qos: .userInitiated, flags: .noQoS, block: {
             let move = strategist.bestMoveForActivePlayer() as! Move
             DispatchQueue.main.async {
-                self.gameScene.showAIIndicator(check: false)
+                self.gameScene.showActivityIndicator(check: false)
                 self.makeMove(row: move.row, column: move.column)
             }
         })
@@ -102,7 +102,8 @@ final class GameLogic {
     }
     
     func cellPressed(row: Int, column: Int) {
-        if isAlertActive { // pass or game over
+        // pass or game over
+        if isAlertActive {
             isAlertActive = false
             gameScene.removeAlert()
             if gameIsFinished() {
@@ -111,12 +112,14 @@ final class GameLogic {
             }
             gameModel.currentPlayer = gameModel.currentPlayer.opponent
             if gameModel.currentPlayer == gamePlayers[1] {
-                AIMove() // AI works here
+                // AI works here
+                AIMove()
             }
             return
         }
         if (row == -1) && (column == -1) {
-            return // allow user to click in any place after alert
+            // allow user to click in any place after alert
+            return
         }
         if gameModel.currentPlayer == gamePlayers[0] {
             if isValidMove(board: gameModel.board, color: gameModel.currentPlayer.color,

@@ -13,7 +13,6 @@ struct Constants {
     static let appFont = "Verdana"
     static let countsLabelSpriteName = "CountsLabel"
     static let alertSpriteName = "Alert"
-    static let activityIndicator = "loader"
     
     struct ChipImages {
         static let whiteChip = "WhiteChip"

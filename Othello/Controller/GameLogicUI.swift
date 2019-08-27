@@ -11,14 +11,30 @@ import SpriteKit
 final class GameLogicUI: SKScene {
     
     private var atlas: SKTextureAtlas!
-    private var activityIndicator: SKSpriteNode!
+    var actInd = UIActivityIndicatorView()
     
     override func didMove(to view: SKView) {
         atlas = createAtlas()
-        activityIndicator = createAIIndicator()
         displayEmptyBoard()
     }
     
+    // Activity Indicator
+    func showActivityIndicator(check: Bool) {
+        actInd.center = view!.center
+        actInd.hidesWhenStopped = true
+        actInd.style = .whiteLarge
+        view?.addSubview(actInd)
+        
+        if check == true {
+            actInd.startAnimating()
+            UIApplication.shared.beginIgnoringInteractionEvents()
+        } else {
+            actInd.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
+        }
+    }
+    
+    // Chips
     func displayChip(color: CellType, row: Int, column: Int) {
         if let cell = childNode(withName: "\(row)\(column)") as! SKSpriteNode? {
         let chipSize = CGSize(width: cell.size.width * 0.85, height: cell.size.height * 0.85)
@@ -44,6 +60,7 @@ final class GameLogicUI: SKScene {
             chip.run(sequence, completion: {chip.texture = texture}) }
     }
     
+    // Labels
     private func drawCountsLabel() {
         let topSquare = self.childNode(withName: "74") as! SKSpriteNode
         let fontSize = topSquare.frame.height * 0.5
@@ -58,6 +75,13 @@ final class GameLogicUI: SKScene {
         self.addChild(countsLabel)
     }
     
+    func updateCountsLabel(white: Int, black: Int) {
+        if let countsLabel = childNode(withName: Constants.countsLabelSpriteName)
+            as! SKLabelNode? {
+            countsLabel.text = "White  \(white) : \(black)  Black" }
+    }
+    
+    // Alerts
     func displayAlert(text: String) {
         let alert = SKLabelNode(fontNamed: Constants.appFont)
         let topSquare = self.childNode(withName: "74") as! SKSpriteNode
@@ -87,40 +111,12 @@ final class GameLogicUI: SKScene {
             Constants.cellImage: chipImages.cellImage ]
         return SKTextureAtlas(dictionary: dictionary as [String : Any])
     }
-
-    func updateCountsLabel(white: Int, black: Int) {
-        if let countsLabel = childNode(withName: Constants.countsLabelSpriteName)
-            as! SKLabelNode? {
-            countsLabel.text = "White: \(white)  Black: \(black)" }
-    }
     
-    private func createAIIndicator() -> SKSpriteNode {
-        let gear = SKSpriteNode(imageNamed: Constants.activityIndicator)
-        let size = self.size.width/10
-        gear.size = CGSize(width: size, height: size)
-        return gear
-    }
-    
-    func showAIIndicator(check: Bool) {
-        if check == true {
-            let yPosition = self.frame.maxY-(activityIndicator.size.height/2)-1
-            activityIndicator.position = CGPoint(x: self.frame.midX, y: yPosition)
-            activityIndicator.zPosition = 2
-            let action = SKAction.rotate(byAngle: CGFloat(-Double.pi/2), duration: 2)
-            activityIndicator.run(SKAction.repeat(action, count: 5))
-            self.addChild(activityIndicator)
-        } else {
-            activityIndicator.removeFromParent()
-        }
-    }
-    
+    // Board
     private func displayEmptyBoard() {
-        // Board parameters
         let size = self.size.width
         let boxSideLength = (size)/8
         let squareSize = CGSize(width: boxSideLength, height: boxSideLength)
-        
-        // draw board
         let yOffset: CGFloat = (boxSideLength*1.25)
         for row in 0..<8 {
             let xOffset: CGFloat = (boxSideLength/2)
@@ -137,6 +133,7 @@ final class GameLogicUI: SKScene {
         drawCountsLabel()
     }
     
+    // View
     func clearGameView() {
         for row in 0..<8 {
             for column in 0..<8 {
