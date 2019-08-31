@@ -1,6 +1,6 @@
 //
 //  GameLogic.swift
-//  UltimateReversi
+//  Othello
 //
 //  Created by Bartosz on 18/06/2019.
 //  Copyright © 2019 Bartosz Bilski. All rights reserved.
@@ -12,7 +12,7 @@ final class GameLogic {
     
     private var gameScene: GameLogicUI
     private var gameModel = GameModel()
-    private var alertActive = false
+    private var isAlertActive = false
     
     private func addChip(color: CellType, row: Int, column: Int) {
         gameScene.displayChip(color: color, row: row, column: column)
@@ -23,7 +23,6 @@ final class GameLogic {
         let playerColor = gameModel.currentPlayer.color
         for dir in directions {
             if let move = checkOneDirection(board: gameModel.board, playerColor, row, column, dir) {
-                
                 // valid move found, go back and flip
                 var nextRow = move.row - dir.row
                 var nextCol = move.column - dir.column
@@ -50,15 +49,15 @@ final class GameLogic {
         gameModel.currentPlayer = gameModel.currentPlayer.opponent
         
         if gameIsFinished() {
-            alertActive = true
+            isAlertActive = true
             var resultText: String
             switch white-black {
             case 1...64:
-                resultText = "White win"
+                resultText = "White wins!"
             case 0:
                 resultText = "Draw"
             default:
-                resultText = "Black win"
+                resultText = "Black wins!"
             }
             gameScene.displayAlert(text: resultText)
             return
@@ -71,7 +70,7 @@ final class GameLogic {
                 AIMove() // let AI work
             }
         } else { // player must pass
-            alertActive = true
+            isAlertActive = true
             gameScene.displayAlert(
                 text: "\(gameModel.currentPlayer.color) have to pass!")
         }
@@ -90,11 +89,11 @@ final class GameLogic {
         //strategist.randomSource = mersenneTwister
         strategist.maxLookAheadDepth = 5
         
-        gameScene.showAIIndicator(check: true)
+        gameScene.showActivityIndicator(check: true)
         let myDispatchWorkItem = DispatchWorkItem(qos: .userInitiated, flags: .noQoS, block: {
-            let move = strategist.bestMove(for: self.gameModel.currentPlayer) as! Move
+            let move = strategist.bestMoveForActivePlayer() as! Move
             DispatchQueue.main.async {
-                self.gameScene.showAIIndicator(check: false)
+                self.gameScene.showActivityIndicator(check: false)
                 self.makeMove(row: move.row, column: move.column)
             }
         })
@@ -102,8 +101,9 @@ final class GameLogic {
     }
     
     func cellPressed(row: Int, column: Int) {
-        if alertActive { // pass or game over
-            alertActive = false
+        // pass or game over
+        if isAlertActive {
+            isAlertActive = false
             gameScene.removeAlert()
             if gameIsFinished() {
                 setInitialBoard()
@@ -111,12 +111,14 @@ final class GameLogic {
             }
             gameModel.currentPlayer = gameModel.currentPlayer.opponent
             if gameModel.currentPlayer == gamePlayers[1] {
-                AIMove() // AI works here
+                // AI works here
+                AIMove()
             }
             return
         }
         if (row == -1) && (column == -1) {
-            return // allow user to click in any place after alert
+            // allow user to click in any place after alert
+            return
         }
         if gameModel.currentPlayer == gamePlayers[0] {
             if isValidMove(board: gameModel.board, color: gameModel.currentPlayer.color,
@@ -146,6 +148,7 @@ final class GameLogic {
     
     init(scene: GameLogicUI) {
         self.gameScene = scene
+        gameScene.backgroundColor = .black
     }
     
 }

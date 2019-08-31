@@ -1,6 +1,6 @@
 //
 //  GameModel.swift
-//  UltimateReversi
+//  Othello
 //
 //  Created by Bartosz on 18/06/2019.
 //  Copyright © 2019 Bartosz Bilski. All rights reserved.
@@ -12,8 +12,8 @@ final class GameModel: NSObject, GKGameModel {
     
     var board = Board()
     var currentPlayer = gamePlayers[0]  // 0 - BLACK, 1 - WHITE
-    let GKGameModelMaxScore = 5000
-    let GKGameModelMinScore = -5000
+    let GKGameModelMaxScore = 100000
+    let GKGameModelMinScore = -100000
     
     private func flipCells(row: Int, column: Int) {
         let playerColor = currentPlayer.color
