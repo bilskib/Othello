@@ -111,7 +111,7 @@ func countValidMoves(for player: Player, on board: Board) -> Double {
 // Evaluate score for a player
 func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
     var score = 0.0
-    var playerDisks = 0.0, opponentDisks = 0.0, playerFrontDisks = 0.0, opponentFrontDisks = 0.0
+    var playerDisks = 0.0, opponentDisks = 0.0, playerFrontDisks = 0.0, opponentFrontDisks = 0.0, playerMobility = 0.0, opponentMobility = 0.0
     let directionX = [-1, -1, 0, 1, 1,  1,  0, -1]
     let directionY = [ 0,  1, 1, 1, 0, -1, -1, -1]
     
@@ -126,10 +126,8 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
     [100, -5, 11,  8,  8, 11, -5, 100]
     ]
     
-    // Disk amount bonus
-    // Piece difference, frontier disks and disk squares
+    // 6. Disk squares
     var dBonus = 0.0
-    
     for row in 0..<8 {
         for column in 0..<8 {
             if board[row, column] == player.color {
@@ -154,6 +152,7 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
         }
         score += 10 * dBonus
         
+        // 1. Piece difference
         var pBonus = 0.0
         if playerDisks > opponentDisks {
             pBonus = (100 * playerDisks) / (playerDisks + opponentDisks)
@@ -164,9 +163,10 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
         else {
             pBonus = 0
         }
-        
         score += 10 * pBonus
         
+        
+        // 5. Frontier disk
         var fBonus = 0.0
         if playerFrontDisks > opponentFrontDisks {
             fBonus = -(100 * playerFrontDisks) / (playerFrontDisks + opponentFrontDisks)
@@ -177,15 +177,13 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
         else {
             fBonus = 0
         }
-        
         //score += 74.396 * fBonus
         score += 74 * fBonus
     }
     
-    // Corner occupancy
+    // 2. Corner occupancy
     playerDisks = 0
     opponentDisks = 0
-    
     if board[0, 0] == player.color { playerDisks += 1 }
     else if board[0, 0] == player.opponent.color { opponentDisks += 1 }
     if board[0, 7] == player.color { playerDisks += 1 }
@@ -195,14 +193,12 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
     if board[7, 7] == player.color { playerDisks += 1 }
     else if board[7, 7] == player.opponent.color { opponentDisks += 1 }
     let cBonus = 25 * (playerDisks - opponentDisks)
-    
     //score += 801.724 * cBonus
     score += 801 * cBonus
     
-    // Corner closeness
+    // 3. Corner closeness
     playerDisks = 0
     opponentDisks = 0
-    
     if board[0, 0] == .Empty {
         if board[0, 1] == player.color { playerDisks += 1 }
         else if board[0, 1] == player.opponent.color { opponentDisks += 1 }
@@ -236,19 +232,27 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
         else if board[7, 6] == player.opponent.color { opponentDisks += 1 }
     }
     let lBonus = -12.5 * (playerDisks - opponentDisks)
-    
     //score += 382.026 * lBonus
     score += 382 * lBonus
     
-    // Mobility
+    // 4. Mobility
     var mBonus = 0.0
-    playerDisks = countValidMoves(for: player, on: board)
-    opponentDisks = countValidMoves(for: player.opponent, on: board)
+    playerMobility = countValidMoves(for: player, on: board)
+    opponentMobility = countValidMoves(for: player.opponent, on: board)
     
-    if playerDisks > opponentDisks { mBonus = (100 * playerDisks) / (playerDisks + opponentDisks) }
-    else if playerDisks < opponentDisks { mBonus = -(100 * opponentDisks) / (playerDisks + opponentDisks) }
     
+    
+    if playerMobility > opponentMobility {
+        mBonus = (100 * playerMobility) / (playerMobility + opponentMobility)
+    }
+    else if playerMobility < opponentMobility {
+        mBonus = -(100 * opponentMobility) / (playerMobility + opponentMobility)
+    }
+    else if playerMobility == 0 || opponentMobility == 0 || playerMobility == opponentMobility {
+        mBonus = 0
+    }
     //score += 78.922 * mBonus
     score += 79 * mBonus
+    
     return score
 }
