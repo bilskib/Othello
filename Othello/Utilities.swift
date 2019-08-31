@@ -239,17 +239,14 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
     var mBonus = 0.0
     playerMobility = countValidMoves(for: player, on: board)
     opponentMobility = countValidMoves(for: player.opponent, on: board)
-    
-    
-    
-    if playerMobility > opponentMobility {
+    if playerMobility == 0 || opponentMobility == 0 || playerMobility == opponentMobility {
+        mBonus = 0
+    }
+    else if playerMobility > opponentMobility {
         mBonus = (100 * playerMobility) / (playerMobility + opponentMobility)
     }
     else if playerMobility < opponentMobility {
         mBonus = -(100 * opponentMobility) / (playerMobility + opponentMobility)
-    }
-    else if playerMobility == 0 || opponentMobility == 0 || playerMobility == opponentMobility {
-        mBonus = 0
     }
     //score += 78.922 * mBonus
     score += 79 * mBonus
