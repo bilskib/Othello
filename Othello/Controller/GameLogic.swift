@@ -14,6 +14,24 @@ final class GameLogic {
     private var gameModel = GameModel()
     private var isAlertActive = false
     
+    func setInitialBoard() {
+        gameScene.clearGameView() // clear results of previous game
+        for row in 0..<8 {
+            for column in 0..<8 {
+                switch (row,column) {
+                case (3,3),(4,4) :
+                    addChip(color: .Black, row: row, column: column)
+                case (3,4),(4,3) :
+                    addChip(color: .White, row: row, column: column)
+                default:
+                    gameModel.board[row,column] = .Empty
+                }
+            }
+        }
+        gameScene.updateCountsLabel(white: 2,black: 2)
+        gameModel.currentPlayer = gamePlayers[0]
+    }
+    
     private func addChip(color: CellType, row: Int, column: Int) {
         gameScene.displayChip(color: color, row: row, column: column)
         gameModel.board[row, column] = color
@@ -21,23 +39,19 @@ final class GameLogic {
     
     private func flipCells(row: Int, column: Int) {
         let playerColor = gameModel.currentPlayer.color
-        for dir in directions {
-            if let move = checkOneDirection(board: gameModel.board, playerColor, row, column, dir) {
+        for direction in directions {
+            if let move = checkOneDirection(board: gameModel.board, playerColor, row, column, direction) {
                 // valid move found, go back and flip
-                var nextRow = move.row - dir.row
-                var nextCol = move.column - dir.column
+                var nextRow = move.row - direction.row
+                var nextCol = move.column - direction.column
                 while (nextRow != row) || (nextCol != column) {
                     gameModel.board[nextRow, nextCol] = playerColor
                     gameScene.updateChip(color: playerColor, nextRow, nextCol)
-                    nextRow -= dir.row
-                    nextCol -= dir.column
+                    nextRow -= direction.row
+                    nextCol -= direction.column
                 }
             }
         }
-    }
-    
-    func gameIsFinished() -> Bool {
-        return !playerHasValidMoves(board: gameModel.board, gameModel.currentPlayer) && !playerHasValidMoves(board: gameModel.board, gameModel.currentPlayer.opponent)
     }
     
     private func makeMove(row: Int, column: Int) {
@@ -129,22 +143,8 @@ final class GameLogic {
         }
     }
     
-    func setInitialBoard() {
-        gameScene.clearGameView() // clear results of previous game
-        for row in 0..<8 {
-            for column in 0..<8 {
-                switch (row,column) {
-                case (3,3),(4,4) :
-                    addChip(color: .Black, row: row, column: column)
-                case (3,4),(4,3) :
-                    addChip(color: .White, row: row, column: column)
-                default:
-                    gameModel.board[row,column] = .Empty
-                }
-            }
-        }
-        gameScene.updateCountsLabel(white: 2,black: 2)
-        gameModel.currentPlayer = gamePlayers[0]
+    func gameIsFinished() -> Bool {
+        return !playerHasValidMoves(board: gameModel.board, gameModel.currentPlayer) && !playerHasValidMoves(board: gameModel.board, gameModel.currentPlayer.opponent)
     }
     
     init(scene: GameScene) {

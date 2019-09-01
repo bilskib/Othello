@@ -7,14 +7,12 @@
 //
 
 struct Constants {
-    
     static let cellBackgroundImage = "board"
     static let cellImage = "CellImage"
     static let appFont = "Verdana"
     static let appFontSize = 30
     static let countsLabelSpriteName = "CountsLabel"
     static let alertSpriteName = "Alert"
-    
     struct ChipImages {
         static let whiteChip = "WhiteChip"
         static let blackChip = "BlackChip"
