@@ -10,7 +10,7 @@ import GameplayKit
 
 final class GameLogic {
     
-    private var gameScene: GameLogicUI
+    private var gameScene: GameScene
     private var gameModel = GameModel()
     private var isAlertActive = false
     
@@ -67,7 +67,7 @@ final class GameLogic {
             if gameModel.currentPlayer == gamePlayers[0] {
                 return // wait for human move
             } else {
-                AIMove() // let AI work
+                AIMove() // AI moves
             }
         } else { // player must pass
             isAlertActive = true
@@ -116,6 +116,7 @@ final class GameLogic {
             }
             return
         }
+        
         if (row == -1) && (column == -1) {
             // allow user to click in any place after alert
             return
@@ -146,7 +147,7 @@ final class GameLogic {
         gameModel.currentPlayer = gamePlayers[0]
     }
     
-    init(scene: GameLogicUI) {
+    init(scene: GameScene) {
         self.gameScene = scene
         gameScene.backgroundColor = .black
     }

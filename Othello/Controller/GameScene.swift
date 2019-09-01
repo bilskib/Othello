@@ -1,5 +1,5 @@
 //
-//  GameLogicUI.swift
+//  GameScene.swift
 //  Othello
 //
 //  Created by Bartosz on 18/06/2019.
@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-final class GameLogicUI: SKScene {
+final class GameScene: SKScene {
     
     private var atlas: SKTextureAtlas!
     private var actInd = UIActivityIndicatorView()

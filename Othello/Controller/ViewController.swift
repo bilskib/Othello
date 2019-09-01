@@ -11,14 +11,14 @@ import SpriteKit
 
 class ViewController: UIViewController {
 
-    private var scene: GameLogicUI!
+    private var scene: GameScene!
     private var gameLogic: GameLogic!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         let skView = self.view as! SKView
-        scene = GameLogicUI(size: self.view.bounds.size)
+        scene = GameScene(size: self.view.bounds.size)
         scene.scaleMode = .aspectFit
         skView.presentScene(scene)
         gameLogic = GameLogic(scene: scene)

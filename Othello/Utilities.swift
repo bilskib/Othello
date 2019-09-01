@@ -111,19 +111,19 @@ func countValidMoves(for player: Player, on board: Board) -> Double {
 // Evaluate score for a player
 func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
     var score = 0.0
-    var playerDisks = 0.0, opponentDisks = 0.0, playerFrontDisks = 0.0, opponentFrontDisks = 0.0, playerMobility = 0.0, opponentMobility = 0.0
+    var playerDisks = 0.0, opponentDisks = 0.0, playerFrontierDisks = 0.0, opponentFrontierDisks = 0.0, playerMobility = 0.0, opponentMobility = 0.0
     let directionX = [-1, -1, 0, 1, 1,  1,  0, -1]
     let directionY = [ 0,  1, 1, 1, 0, -1, -1, -1]
     
     let evaluationBoard: [[Double]] = [
-    [100, -5, 11,  8,  8, 11, -5, 100],
-    [-5, -8, -4,  1,  1, -4, -8, -5],
-    [11, -4,  2,  2,  2,  2, -4, 11],
-    [8,   1,  2, -3, -3,  2,  1,  8],
-    [8,   1,  2, -3, -3,  2,  1,  8],
-    [11, -4,  2,  2,  2,  2, -4, 11],
-    [-5, -8, -4,  1,  1, -4, -8, -5],
-    [100, -5, 11,  8,  8, 11, -5, 100]
+    [1000, -500,  110,  80,  80, 110, -500,  1000],
+    [-500, -800,  -40,  10,  10, -40, -800,  -500],
+    [ 110,  -40,    2,   2,   2,   2,  -40,   110],
+    [  80,   10,    2,  -3,  -3,   2,   10,    80],
+    [  80,   10,    2,  -3,  -3,   2,   10,    80],
+    [ 110,  -40,    2,   2,   2,   2,  -40,   110],
+    [-500, -800,  -40,  10,  10, -40, -800,  -500],
+    [1000, -500,  110,  80,  80, 110, -500,  1000]
     ]
     
     // 6. Disk squares
@@ -143,14 +143,14 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
                     x = row + directionX[index]
                     y = column + directionY[index]
                     if x >= 0 && x < 8 && y >= 0 && y < 8 && board[x, y] == .Empty {
-                        if board[row, column] == player.color { playerFrontDisks += 1 }
-                        else { opponentFrontDisks += 1 }
+                        if board[row, column] == player.color { playerFrontierDisks += 1 }
+                        else { opponentFrontierDisks += 1 }
                         break
                     }
                 }
             }
         }
-        score += 10 * dBonus
+        score += 75 * dBonus
         
         // 1. Piece difference
         var pBonus = 0.0
@@ -163,22 +163,21 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
         else {
             pBonus = 0
         }
-        score += 10 * pBonus
+        score += 100 * pBonus
         
         
         // 5. Frontier disk
         var fBonus = 0.0
-        if playerFrontDisks > opponentFrontDisks {
-            fBonus = -(100 * playerFrontDisks) / (playerFrontDisks + opponentFrontDisks)
+        if playerFrontierDisks > opponentFrontierDisks {
+            fBonus = -(100 * playerFrontierDisks) / (playerFrontierDisks + opponentFrontierDisks)
         }
-        else if playerFrontDisks < opponentFrontDisks {
-            fBonus = (100 * opponentFrontDisks) / (playerFrontDisks + opponentFrontDisks)
+        else if playerFrontierDisks < opponentFrontierDisks {
+            fBonus = (100 * opponentFrontierDisks) / (playerFrontierDisks + opponentFrontierDisks)
         }
         else {
             fBonus = 0
         }
-        //score += 74.396 * fBonus
-        score += 74 * fBonus
+        score += 75 * fBonus
     }
     
     // 2. Corner occupancy
@@ -193,8 +192,7 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
     if board[7, 7] == player.color { playerDisks += 1 }
     else if board[7, 7] == player.opponent.color { opponentDisks += 1 }
     let cBonus = 25 * (playerDisks - opponentDisks)
-    //score += 801.724 * cBonus
-    score += 801 * cBonus
+    score += 80000 * cBonus
     
     // 3. Corner closeness
     playerDisks = 0
