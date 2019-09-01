@@ -30,16 +30,17 @@ let directions: [(row: Int, column: Int)] =
 (-1,-1), (-1,0), (-1,1) // down-left, down, down-right
 ]
 
-func checkOneDirection(board: Board, _ color: CellType, _ row: Int, _ column: Int, _ dir: (row: Int, column: Int)) -> Move? {
-    
-    let outOfBoardPosition = { return ($0 < 0) || ($0 > 7)}
+let outOfBoardPosition = { return ($0 < 0) || ($0 > 7)}
+
+func checkOneDirection(board: Board, _ color: CellType, _ row: Int, _ column: Int, _ direction: (row: Int, column: Int)) -> Move? {
+
     let opponentColor: CellType = (color == .White) ? .Black : .White
     
-    var nextRow = row + dir.row
+    var nextRow = row + direction.row
     if outOfBoardPosition(nextRow) {
         return nil
     }
-    var nextColumn = column + dir.column
+    var nextColumn = column + direction.column
     if outOfBoardPosition(nextColumn) {
         return nil
     }
@@ -49,11 +50,11 @@ func checkOneDirection(board: Board, _ color: CellType, _ row: Int, _ column: In
     }
     
     while board[nextRow, nextColumn] == opponentColor {
-        nextRow += dir.row
+        nextRow += direction.row
         if outOfBoardPosition(nextRow) {
             return nil
         }
-        nextColumn += dir.column
+        nextColumn += direction.column
         if outOfBoardPosition(nextColumn) {
             return nil
         }
@@ -112,8 +113,6 @@ func countValidMoves(for player: Player, on board: Board) -> Double {
 func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
     var score = 0.0
     var playerDisks = 0.0, opponentDisks = 0.0, playerFrontierDisks = 0.0, opponentFrontierDisks = 0.0, playerMobility = 0.0, opponentMobility = 0.0
-    let directionX = [-1, -1, 0, 1, 1,  1,  0, -1]
-    let directionY = [ 0,  1, 1, 1, 0, -1, -1, -1]
     
     let evaluationBoard: [[Double]] = [
     [1000, -500,  110,  80,  80, 110, -500,  1000],
@@ -138,12 +137,12 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
                 opponentDisks += 1
             }
             if board[row, column] != .Empty {
-                var x: Int, y: Int
-                for index in 0..<8 {
-                    x = row + directionX[index]
-                    y = column + directionY[index]
-                    if x >= 0 && x < 8 && y >= 0 && y < 8 && board[x, y] == .Empty {
-                        if board[row, column] == player.color { playerFrontierDisks += 1 }
+                var nextRow: Int, nextColumn: Int
+                for direction in directions{
+                    nextRow = row + direction.row
+                    nextColumn = column + direction.column
+                    if !outOfBoardPosition(nextRow) && !outOfBoardPosition(nextColumn) && board[nextRow, nextColumn] == .Empty {
+                        if board[row,column] == player.color { playerFrontierDisks += 1 }
                         else { opponentFrontierDisks += 1 }
                         break
                     }
@@ -192,7 +191,7 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
     if board[7, 7] == player.color { playerDisks += 1 }
     else if board[7, 7] == player.opponent.color { opponentDisks += 1 }
     let cBonus = 25 * (playerDisks - opponentDisks)
-    score += 80000 * cBonus
+    score += 8000 * cBonus
     
     // 3. Corner closeness
     playerDisks = 0
@@ -247,7 +246,7 @@ func dynamicHeuristicEvaluation(for player: Player, on board: Board) -> Double {
         mBonus = -(100 * opponentMobility) / (playerMobility + opponentMobility)
     }
     //score += 78.922 * mBonus
-    score += 79 * mBonus
+    score += 1000 * mBonus
     
     return score
 }
