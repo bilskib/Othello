@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F338C8C23284D6A000E39DC /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0F338C8B23284D6A000E39DC /* MenuScene.sks */; };
+		0F338C8E232853FA000E39DC /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F338C8D232853FA000E39DC /* MenuScene.swift */; };
+		0F338C90232854D4000E39DC /* MagicParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0F338C8F232854D4000E39DC /* MagicParticle.sks */; };
 		0F9E82E422B9698500A96D94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E82E322B9698500A96D94 /* AppDelegate.swift */; };
 		0F9E82E622B9698500A96D94 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E82E522B9698500A96D94 /* ViewController.swift */; };
 		0F9E82E922B9698500A96D94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F9E82E722B9698500A96D94 /* Main.storyboard */; };
@@ -23,6 +26,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F338C8B23284D6A000E39DC /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
+		0F338C8D232853FA000E39DC /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		0F338C8F232854D4000E39DC /* MagicParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MagicParticle.sks; sourceTree = "<group>"; };
 		0F9E82E022B9698500A96D94 /* Othello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Othello.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F9E82E322B9698500A96D94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F9E82E522B9698500A96D94 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +72,8 @@
 			isa = PBXGroup;
 			children = (
 				0F9E830322B982BD00A96D94 /* Images.swift */,
+				0F338C8F232854D4000E39DC /* MagicParticle.sks */,
+				0F338C8B23284D6A000E39DC /* MenuScene.sks */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -73,6 +81,7 @@
 		0F2BFAB62308B2AF00B48E57 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				0F338C8D232853FA000E39DC /* MenuScene.swift */,
 				0F9E830722B993AB00A96D94 /* GameLogic.swift */,
 				0F9E830522B98F7D00A96D94 /* GameScene.swift */,
 				0F9E82E522B9698500A96D94 /* ViewController.swift */,
@@ -172,7 +181,9 @@
 			files = (
 				0F9E82EE22B9698600A96D94 /* LaunchScreen.storyboard in Resources */,
 				0F9E82EB22B9698600A96D94 /* Assets.xcassets in Resources */,
+				0F338C90232854D4000E39DC /* MagicParticle.sks in Resources */,
 				0F9E82E922B9698500A96D94 /* Main.storyboard in Resources */,
+				0F338C8C23284D6A000E39DC /* MenuScene.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,6 +196,7 @@
 			files = (
 				0F9E82E622B9698500A96D94 /* ViewController.swift in Sources */,
 				0F9E830822B993AB00A96D94 /* GameLogic.swift in Sources */,
+				0F338C8E232853FA000E39DC /* MenuScene.swift in Sources */,
 				0F9E82F622B972DC00A96D94 /* Move.swift in Sources */,
 				0F9E82E422B9698500A96D94 /* AppDelegate.swift in Sources */,
 				0F9E82FA22B9745B00A96D94 /* Utilities.swift in Sources */,

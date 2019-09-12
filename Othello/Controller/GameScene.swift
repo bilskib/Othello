@@ -8,15 +8,52 @@
 
 import SpriteKit
 
+
 final class GameScene: SKScene {
-    
+
     private var atlas: SKTextureAtlas!
     private var actInd = UIActivityIndicatorView()
     
-    override func didMove(to view: SKView) {
+    private var gameLogic2: GameLogic!
+    
+    // MARK: Helper Methods
+    func pprintTable(board: Board) {
+        for row in 0...7 {
+            for column in 0...7 {
+                print(board[row,column])
+            }
+        }
+    }
+    
+    func startGame() {
         atlas = createAtlas()
         displayEmptyBoard()
+        gameLogic2 = GameLogic(scene: self)
+        gameLogic2.setInitialBoard()
     }
+    
+    override func didMove(to view: SKView) {
+        startGame()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let location = touch.location(in: self)
+            print(location)
+            if let node: SKSpriteNode = self.atPoint(location) as? SKSpriteNode {
+                if let num = Int(node.name!) {
+                    let row = num / 10
+                    let column = num % 10
+                    gameLogic2.cellPressed(row: row, column: column)
+                }
+            } else {
+                // press outside the gameboard, in the current view
+                gameLogic2.cellPressed(row: -1, column: -1)
+            }
+        }
+    }
+
+    
     
     // Activity Indicator
     func showActivityIndicator(check: Bool) {
@@ -37,12 +74,12 @@ final class GameScene: SKScene {
     // Chips
     func displayChip(color: CellType, row: Int, column: Int) {
         if let cell = childNode(withName: "\(row)\(column)") as! SKSpriteNode? {
-        let chipSize = CGSize(width: cell.size.width * 0.85, height: cell.size.height * 0.85)
-        let texture = color == .White ? atlas.textureNamed(Constants.ChipImages.whiteChip) : atlas.textureNamed(Constants.ChipImages.blackChip)
-        let chip = SKSpriteNode(texture: texture, size: chipSize)
-        chip.name = cell.name
-        chip.zPosition = 1
-        chip.isUserInteractionEnabled = true
+            let chipSize = CGSize(width: cell.size.width * 0.85, height: cell.size.height * 0.85)
+            let texture = color == .White ? atlas.textureNamed(Constants.ChipImages.whiteChip) : atlas.textureNamed(Constants.ChipImages.blackChip)
+            let chip = SKSpriteNode(texture: texture, size: chipSize)
+            chip.name = cell.name
+            chip.zPosition = 1
+            chip.isUserInteractionEnabled = true
             cell.addChild(chip)}
     }
     
@@ -103,6 +140,7 @@ final class GameScene: SKScene {
             Constants.ChipImages.whiteChip: images.whiteChipWithLight,
             Constants.ChipImages.blackChip: images.blackChipWithLight,
             Constants.cellImage: images.cellImage ]
+        print("finished createAtlas method")
         return SKTextureAtlas(dictionary: dictionary as [String : Any])
     }
     
@@ -121,8 +159,10 @@ final class GameScene: SKScene {
                 square.name = "\(row)\(column)"
                 square.isUserInteractionEnabled = true
                 self.addChild(square)
+                print(square.name!)
             }
         }
+        print("finished displayEmptyBoard method")
         drawCountsLabel()
     }
     
@@ -139,4 +179,5 @@ final class GameScene: SKScene {
             }
         }
     }
+    
 }

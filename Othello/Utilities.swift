@@ -9,7 +9,7 @@
 struct Constants {
     static let cellBackgroundImage = "board"
     static let cellImage = "CellImage"
-    static let appFont = "Verdana"
+    static let appFont = "GillSans"
     static let appFontSize = 30
     static let countsLabelSpriteName = "CountsLabel"
     static let alertSpriteName = "Alert"

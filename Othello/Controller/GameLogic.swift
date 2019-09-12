@@ -10,7 +10,8 @@ import GameplayKit
 
 final class GameLogic {
     
-    private var gameScene: GameScene
+    //private var gameScene: GameScene = GameScene(size: CGSize(width: 600, height: 1200))
+    var gameScene: GameScene
     private var gameModel = GameModel()
     private var isAlertActive = false
     
@@ -146,10 +147,16 @@ final class GameLogic {
     func gameIsFinished() -> Bool {
         return !playerHasValidMoves(board: gameModel.board, gameModel.currentPlayer) && !playerHasValidMoves(board: gameModel.board, gameModel.currentPlayer.opponent)
     }
-    
+
     init(scene: GameScene) {
+        
         self.gameScene = scene
-        gameScene.backgroundColor = .black
+        
+        //gameLogicUI.backgroundColor = .black
+        
+        //setInitialBoard()
     }
+    
+
     
 }
